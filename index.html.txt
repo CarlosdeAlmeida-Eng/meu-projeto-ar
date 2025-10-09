@@ -1,5 +1,0 @@
-<html>
-<body>
-	Página HTML 
-</body>
-</html>
