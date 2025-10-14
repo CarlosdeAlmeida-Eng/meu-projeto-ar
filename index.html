@@ -1,23 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Meu Projeto AR</title>
-  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
-  <style>body{margin:0;overflow:hidden}</style>
+    <title>Meu Projeto AR Interativo</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
+    <style>body{margin:0;overflow:hidden}</style>
 </head>
 <body>
-  <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
-    <a-entity camera cursor="rayOrigin: mouse; fuse:false"
-              raycaster="objects: .tocavel"></a-entity>
-    <a-marker preset="hiro">
-      <a-entity  class="tocavel" gesture-handler
-            gltf-model="url(Globo.glb)" scale="2.5 2.5 2.5" position="0 0 0"
-            animation__grow="property: scale; to: 3 3 3; dur:120; startEvents: mousedown"
-            animation__shrink="property: scale; to: 2.5 2.5 2.5; dur:120; startEvents: mouseup">
-      </a-entity>
-      <a-light type="ambient"    color="#BBB"></a-light>
-      <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
-    </a-marker>
-  </a-scene>
+    <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
+
+        <a-entity camera cursor="rayOrigin: mouse; fuse:false"
+                  raycaster="objects: .interativo"></a-entity>
+
+        <a-marker preset="hiro">
+
+            <a-entity
+                id="globo-pivote"
+                class="interativo"
+                gesture-handler
+                animation__levitate="property: position; to: 0 1.5 0; dur: 800; easing: easeInOutQuad; startEvents: holdstart">
+
+                <a-entity
+                    id="globo-modelo"
+                    gltf-model="url(Globo.glb)"
+                    scale="2.5 2.5 2.5"
+                    position="0 0 0"
+                    
+                    animation__jumpUp="property: position; to: 0 1 0; dur: 400; easing: easeOutQuad; startEvents: jump"
+                    
+                    animation__jumpDown="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__jumpUp"
+
+                    animation__rotacaoInfinita="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear; startEvents: iniciar-rotacao">
+                </a-entity>
+            </a-entity>
+
+            <a-light type="ambient" color="#BBB"></a-light>
+            <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
+
+        </a-marker>
+    </a-scene>
+
+    <script>
+        // Espera a cena carregar para encontrar as entidades
+        window.addEventListener('load', () => {
+            const pivote = document.querySelector('#globo-pivote');
+            const modelo = document.querySelector('#globo-modelo');
+
+            // 1. Interação de Toque (Pulo)
+            // Quando o PAI (pivote) detectar um 'click'...
+            pivote.addEventListener('click', () => {
+                // ...ele avisa o FILHO (modelo) para emitir o evento 'jump'.
+                modelo.emit('jump');
+            });
+
+            // 2. Interação de Segurar (Levitar e Girar)
+            // Quando a animação de levitar do PAI (pivote) terminar...
+            pivote.addEventListener('animationcomplete__levitate', () => {
+                // ...ele avisa o FILHO (modelo) para emitir o evento 'iniciar-rotacao'.
+                modelo.emit('iniciar-rotacao');
+            });
+        });
+    </script>
+</body>
+</html>
