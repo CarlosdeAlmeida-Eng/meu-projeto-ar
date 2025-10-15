@@ -11,66 +11,16 @@
   <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
     <a-entity camera cursor="rayOrigin: mouse; fuse:false" raycaster="objects: .tocavel"></a-entity>
     <a-marker preset="hiro">
-      <a-entity
-    id="globo-pivote"
-    class="tocavel"
-    gesture-handler
-    position="0 0 0"
-    
-    animation__levitate="property: position; to: 0 1.5 0; dur: 800; easing: easeInOutQuad; startEvents: holdstart">
+      <a-entity class="tocavel" gesture-handler
+                 gltf-model="url(Globo.glb)"
+                 scale="2.5 2.5 2.5"
+                 position="0 0 0"
+                 animation__up="property: position; to: 0 0.5 0; begin: click; dur: 400; easing: easeOutQuad"
+                 animation__down="property: position; to: 0 0 0; begin: animationcomplete__up; dur: 500; easing: easeInQuad"
 
-    <a-entity
-        id="globo-modelo"
-        gltf-model="url(Globo.glb)"
-        scale="2.5 2.5 2.5"
-        position="0 0 0"
-        
-        animation__up="property: position; to: 0 0.5 0; dur: 400; easing: easeOutQuad; startEvents: start-jump"
-        animation__down="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__up"
-        
-        animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; startEvents: start-spin">
-    </a-entity>
-</a-entity>
-
-
-<script>
-    const scene = document.querySelector('a-scene');
-
-    // Em vez de esperar a janela, esperamos a CENA A-FRAME estar 100% pronta.
-    scene.addEventListener('loaded', () => {
-        console.log("A-Frame Cena Carregada. Script de interação iniciado.");
-
-        const pivote = document.querySelector('#globo-pivote');
-        const modelo = document.querySelector('#globo-modelo');
-
-        // Mensagens de diagnóstico para garantir que encontramos os elementos
-        if (pivote) {
-            console.log("Entidade PAI ('globo-pivote') encontrada com sucesso.", pivote);
-        } else {
-            console.error("ERRO: Entidade PAI ('globo-pivote') NÃO encontrada!");
-        }
-
-        if (modelo) {
-            console.log("Entidade FILHO ('globo-modelo') encontrada com sucesso.", modelo);
-        } else {
-            console.error("ERRO: Entidade FILHO ('globo-modelo') NÃO encontrada!");
-        }
-
-        // Se o pivote (Pai) for clicado...
-        pivote.addEventListener('click', () => {
-            console.log("EVENTO 'click' detectado no pivô. Enviando 'start-jump' para o modelo.");
-            // ...avise o modelo (Filho) para ele pular.
-            modelo.emit('start-jump');
-        });
-
-        // Se a animação de levitar do pivote (Pai) terminar...
-        pivote.addEventListener('animationcomplete__levitate', () => {
-            console.log("EVENTO 'animationcomplete__levitate' detectado no pivô. Enviando 'start-spin' para o modelo.");
-            // ...avise o modelo (Filho) para ele começar a girar.
-            modelo.emit('start-spin');
-        });
-    });
-</script>
+                 animation__levitate="property: position; to: 0 1.5 0; begin: holdstart; easing: easeInOutQuad"
+                 animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; autoplay: false; begin: animationcomplete__levitate;">
+      </a-entity>
 
       <a-light type="ambient"    color="#BBB"></a-light>
       <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
