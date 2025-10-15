@@ -11,16 +11,39 @@
   <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
     <a-entity camera cursor="rayOrigin: mouse; fuse:false" raycaster="objects: .tocavel"></a-entity>
     <a-marker preset="hiro">
-      <a-entity class="tocavel" gesture-handler
-                 gltf-model="url(Globo.glb)"
-                 scale="2.5 2.5 2.5"
-                 position="0 0 0"
-                 animation__up="property: position; to: 0 0.5 0; begin: click; dur: 400; easing: easeOutQuad"
-                 animation__down="property: position; to: 0 0 0; begin: animationcomplete__up; dur: 500; easing: easeInQuad"
+      <a-entity class="tocavel" 
+          gesture-handler
+          gltf-model="url(Globo.glb)"
+          scale="2.5 2.5 2.5"
+          position="0 0 0">
 
-                 animation__levitate="property: position; to: 0 1.5 0; begin: holdstart; easing: easeInOutQuad"
-                 animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; autoplay: false; begin: animationcomplete__levitate;">
-      </a-entity>
+    <a-animation attribute="position"
+                 to="0 1 0" 
+                 dur="400" 
+                 easing="easeOutQuad"
+                 begin="click"></a-animation>
+                 
+    <a-animation attribute="position"
+                 to="0 0 0" 
+                 dur="500" 
+                 easing="easeInQuad"
+                 begin="animationcomplete__up"></a-animation>
+
+
+    <a-animation attribute="position"
+                 to="0 1.5 0" 
+                 dur="800"
+                 easing="easeInOutQuad"
+                 begin="holdstart"></a-animation>
+
+    <a-animation attribute="rotation"
+                 to="0 360 0" 
+                 dur="10000" 
+                 easing="linear" 
+                 loop="true"
+                 begin="animationcomplete__levitate"></a-animation>
+
+</a-entity>
 
       <a-light type="ambient"    color="#BBB"></a-light>
       <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
