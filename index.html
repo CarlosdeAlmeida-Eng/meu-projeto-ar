@@ -1,66 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Meu Projeto AR Interativo</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
-    <style>body{margin:0;overflow:hidden}</style>
+  <title>Meu Projeto AR</title>
+  <!-- A-Frame núcleo (renderização 3D) -->
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <!-- aframe-extras: habilita animation-mixer para clipes GLB -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  <!-- AR.js para A-Frame (rastreamento marker-based) -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
-<body>
-    <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
+<body style="margin:0; overflow:hidden;">
+  <!-- Cena RA embutida que usa a webcam -->
+  <a-scene embedded arjs="sourceType: webcam;">
+    <!-- Câmera controlada pelo AR.js -->
+    <a-entity camera></a-entity>
+    <!-- Marcador Hiro padrão -->
+    <a-marker preset="hiro">
+      <!-- Modelo GLB animado -->
+    
+          <a-entity class="tocavel" gesture-handler
+              gltf-model="url(Globo.glb)"
+              scale="2.5 2.5 2.5"
+              position="0 0 0"
+              animation__up="property: position; to: 0 1 0; startEvents: mousedown; dur: 200"
+              animation__down="propery: position; to: 0 0 0: startEvents: mouseup; dur: 200"
 
-        <a-entity camera cursor="rayOrigin: mouse; fuse:false"
-                  raycaster="objects: .interativo"></a-entity>
+              animation="property: rotation; to: 0 360 0; loop: true; startEvents: mousedown; dur: 10000; easing: linear;"
+              animation="property: rotation; to: 0 360 0; loop: true; startEvents: mouseup; dur: 10000; easing: linear;">
+          <a-entity>    
 
-        <a-marker preset="hiro">
-
-            <a-entity
-                id="globo-pivote"
-                class="interativo"
-                gesture-handler
-                animation__levitate="property: position; to: 0 1.5 0; dur: 800; easing: easeInOutQuad; startEvents: holdstart">
-
-                <a-entity
-                    id="globo-modelo"
-                    gltf-model="url(Globo.glb)"
-                    scale="2.5 2.5 2.5"
-                    position="0 0 0"
-                    
-                    animation__jumpUp="property: position; to: 0 1 0; dur: 400; easing: easeOutQuad; startEvents: jump"
-                    
-                    animation__jumpDown="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__jumpUp"
-
-                    animation__rotacaoInfinita="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear; startEvents: iniciar-rotacao">
-                </a-entity>
-            </a-entity>
-
-            <a-light type="ambient" color="#BBB"></a-light>
-            <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
-
-        </a-marker>
-    </a-scene>
-
-    <script>
-        // Espera a cena carregar para encontrar as entidades
-        window.addEventListener('load', () => {
-            const pivote = document.querySelector('#globo-pivote');
-            const modelo = document.querySelector('#globo-modelo');
-
-            // 1. Interação de Toque (Pulo)
-            // Quando o PAI (pivote) detectar um 'click'...
-            pivote.addEventListener('click', () => {
-                // ...ele avisa o FILHO (modelo) para emitir o evento 'jump'.
-                modelo.emit('jump');
-            });
-
-            // 2. Interação de Segurar (Levitar e Girar)
-            // Quando a animação de levitar do PAI (pivote) terminar...
-            pivote.addEventListener('animationcomplete__levitate', () => {
-                // ...ele avisa o FILHO (modelo) para emitir o evento 'iniciar-rotacao'.
-                modelo.emit('iniciar-rotacao');
-            });
-        });
-    </script>
+      <!-- Luz ambiente suave -->
+      <a-light type="ambient" color="#BBB"></a-light>
+      <!-- Luz direcional para realçar o modelo -->
+      <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
+    </a-marker>
+  </a-scene>
 </body>
 </html>
+
