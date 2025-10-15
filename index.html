@@ -15,8 +15,12 @@
                  gltf-model="url(Globo.glb)"
                  scale="2.5 2.5 2.5"
                  position="0 0 0"
+        
+    animation__up="property: position; to: 0 0.5 0; dur: 400; easing: easeOutQuad; startEvents: gesture-tap"
+    animation__down="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__up"
 
-                 animation__tapUP="property: position; to: 0 0.5 0; dur: 400; easing: easeOutQuad; startEvents: gesture-tap">             
+    animation__levitate="property: position; to: 0 1.5 0; dur: 800; easing: easeInOutQuad; startEvents: holdstart"
+    animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; startEvents: animationcomplete__levitate">
       </a-entity>
 
       <a-light type="ambient"    color="#BBB"></a-light>
