@@ -34,22 +34,39 @@
 
 
 <script>
-    // Garante que o script só rode depois que a página inteira carregar
-    window.addEventListener('load', () => {
+    const scene = document.querySelector('a-scene');
+
+    // Em vez de esperar a janela, esperamos a CENA A-FRAME estar 100% pronta.
+    scene.addEventListener('loaded', () => {
+        console.log("A-Frame Cena Carregada. Script de interação iniciado.");
+
         const pivote = document.querySelector('#globo-pivote');
         const modelo = document.querySelector('#globo-modelo');
 
+        // Mensagens de diagnóstico para garantir que encontramos os elementos
+        if (pivote) {
+            console.log("Entidade PAI ('globo-pivote') encontrada com sucesso.", pivote);
+        } else {
+            console.error("ERRO: Entidade PAI ('globo-pivote') NÃO encontrada!");
+        }
+
+        if (modelo) {
+            console.log("Entidade FILHO ('globo-modelo') encontrada com sucesso.", modelo);
+        } else {
+            console.error("ERRO: Entidade FILHO ('globo-modelo') NÃO encontrada!");
+        }
+
         // Se o pivote (Pai) for clicado...
         pivote.addEventListener('click', () => {
+            console.log("EVENTO 'click' detectado no pivô. Enviando 'start-jump' para o modelo.");
             // ...avise o modelo (Filho) para ele pular.
-            // (Ele emite o evento 'start-jump' que a animation__up está ouvindo)
             modelo.emit('start-jump');
         });
 
         // Se a animação de levitar do pivote (Pai) terminar...
         pivote.addEventListener('animationcomplete__levitate', () => {
+            console.log("EVENTO 'animationcomplete__levitate' detectado no pivô. Enviando 'start-spin' para o modelo.");
             // ...avise o modelo (Filho) para ele começar a girar.
-            // (Ele emite o evento 'start-spin' que a animation__spin está ouvindo)
             modelo.emit('start-spin');
         });
     });
