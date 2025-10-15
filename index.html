@@ -15,10 +15,11 @@
                  gltf-model="url(Globo.glb)"
                  scale="2.5 2.5 2.5"
                  position="0 0 0"
-                 animation__up="property: position; to: 0 0.5 0; startEvents: mousedown; dur: 200"
-                 animation__down="property: position; to: 0 0 0; startEvents: mouseup; dur: 200"
+                 animation__up="property: position; to: 0 0.5 0; begin: click; dur: 400; easing: easeOutQuad"
+                 animation__down="property: position; to: 0 0 0; begin: animationcomplete__up; dur: 500; easing: easeInQuad"
 
-                 animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; autoplay: false; resumeEvents: mousedown; pauseEvents: mouseup;">        
+                 animation__levitate="property: position; to: 0 1.5 0; begin: holdstart; easing: easeInOutQuad"
+                 animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; autoplay: false; begin: animationcomplete__levitate;">
       </a-entity>
 
       <a-light type="ambient"    color="#BBB"></a-light>
