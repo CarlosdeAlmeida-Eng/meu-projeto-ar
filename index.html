@@ -11,67 +11,19 @@
   <a-scene embedded arjs="sourceType: webcam;" gesture-detector>
     <a-entity camera cursor="rayOrigin: mouse; fuse:false" raycaster="objects: .tocavel"></a-entity>
     <a-marker preset="hiro">
-      <a-entity
-    id="globo-pivote"
-    class="tocavel"
-    gesture-handler position="0 0 0">
+      <a-entity class="tocavel" gesture-handler
+                 gltf-model="url(Globo.glb)"
+                 scale="2.5 2.5 2.5"
+                 position="0 0 0"
 
-    <a-entity
-        id="globo-modelo"
-        gltf-model="url(Globo.glb)"
-        scale="2.5 2.5 2.5"
-        position="0 0 0"
+                 animation__tapUP="property: position; to: 0 0.5 0; dur: 400; easing: easeOutQuad; startEvents: gesture-tap"
+                 animation__tapDOWN="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__up"
         
-        animation__up="property: position; to: 0 0.5 0; dur: 400; easing: easeOutQuad; startEvents: start-jump"
-        animation__down="property: position; to: 0 0 0; dur: 500; easing: easeInQuad; startEvents: animationcomplete__up"
-        
-        animation__levitate="property: position; to: 0 1.5 0; dur: 800; easing: easeInOutQuad; startEvents: long-hold"
-        
-        animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; startEvents: animationcomplete__levitate">
-    </a-entity>
-</a-entity>
+                 animation__up="property: position; to: 0 0.5 0; startEvents: mousedown; dur: 200"
+                 animation__down="property: position; to: 0 0 0; startEvents: mouseup; dur: 200"
 
-
-<script>
-    const scene = document.querySelector('a-scene');
-
-    scene.addEventListener('loaded', () => {
-        const pivote = document.querySelector('#globo-pivote');
-        const modelo = document.querySelector('#globo-modelo');
-
-        // Variáveis para guardar nossos timers
-        let shortHoldTimer = null;
-        let longHoldTimer = null;
-        let pressStartTime = 0;
-
-        // O QUE FAZER QUANDO O USUÁRIO APERTA O DEDO
-        pivote.addEventListener('mousedown', () => {
-            pressStartTime = Date.now(); // Guarda o tempo inicial
-
-            // Inicia o timer para o "hold longo" (500ms)
-            longHoldTimer = setTimeout(() => {
-                console.log("Hold longo (500ms) detectado!");
-                // O Pai sobe (pois a animação está nele, mas o evento é no filho)
-                modelo.emit('long-hold'); 
-            }, 500); // 500 milissegundos
-        });
-
-        // O QUE FAZER QUANDO O USUÁRIO SOLTA O DEDO
-        pivote.addEventListener('mouseup', () => {
-            // Limpa os timers que ainda não dispararam.
-            // Isso previne que o 'long-hold' dispare se você soltar antes dos 500ms.
-            clearTimeout(longHoldTimer);
-
-            const pressDuration = Date.now() - pressStartTime;
-
-            // Se for um clique bem rápido (menos de 200ms), consideramos um pulo.
-            if (pressDuration < 200) {
-                console.log("Clique rápido detectado! Acionando pulo.");
-                modelo.emit('start-jump');
-            }
-        });
-    });
-</script>
+                 animation__spin="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true; autoplay: false; resumeEvents: mousedown; pauseEvents: mouseup;">        
+      </a-entity>
 
       <a-light type="ambient"    color="#BBB"></a-light>
       <a-light type="directional" intensity="0.8" position="-1 4 5"></a-light>
