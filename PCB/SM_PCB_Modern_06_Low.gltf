@@ -161,7 +161,7 @@
 			"source": 0
 		},
 		{
-			"name": T_PCB_Modern_06_MetallicRoughness",
+			"name": "T_PCB_Modern_06_MetallicRoughness",
 			"sampler": 0,
 			"source": 1
 		},
