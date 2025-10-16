@@ -90,18 +90,18 @@
 	],
 	"images": [
 		{
-			"uri": "MI_Modern_06_BaseColor.png"
+			"uri": "T_PCB_Modern_06_BaseColor_Low.png"
 		},
 		{
-			"uri": "MI_Modern_06_MetallicRoughness.png"
+			"uri": "T_PCB_Modern_06_MetallicRoughness_Low.png"
 		},
 		{
-			"uri": "MI_Modern_06_Normal.png"
+			"uri": "T_PCB_Modern_06_Normal_Low.png"
 		}
 	],
 	"materials": [
 		{
-			"name": "MI_Modern_06",
+			"name": "T_PCB_Modern_06_",
 			"pbrMetallicRoughness":
 			{
 				"baseColorTexture":
@@ -156,17 +156,17 @@
 	],
 	"textures": [
 		{
-			"name": "MI_Modern_06_BaseColor",
+			"name": "T_PCB_Modern_06_BaseColor",
 			"sampler": 0,
 			"source": 0
 		},
 		{
-			"name": "MI_Modern_06_MetallicRoughness",
+			"name": T_PCB_Modern_06_MetallicRoughness",
 			"sampler": 0,
 			"source": 1
 		},
 		{
-			"name": "MI_Modern_06_Normal",
+			"name": "T_PCB_Modern_06_Normal",
 			"sampler": 0,
 			"source": 2
 		}
