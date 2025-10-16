@@ -101,7 +101,7 @@
 	],
 	"materials": [
 		{
-			"name": "T_PCB_Modern_06_",
+			"name": "MI_Modern_06",
 			"pbrMetallicRoughness":
 			{
 				"baseColorTexture":
@@ -156,17 +156,17 @@
 	],
 	"textures": [
 		{
-			"name": "T_PCB_Modern_06_BaseColor",
+			"name": "MI_Modern_06_BaseColor",
 			"sampler": 0,
 			"source": 0
 		},
 		{
-			"name": "T_PCB_Modern_06_MetallicRoughness",
+			"name": "MI_Modern_06_MetallicRoughness",
 			"sampler": 0,
 			"source": 1
 		},
 		{
-			"name": "T_PCB_Modern_06_Normal",
+			"name": "MI_Modern_06_Normal",
 			"sampler": 0,
 			"source": 2
 		}
